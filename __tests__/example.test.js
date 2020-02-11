@@ -27,28 +27,28 @@ describe("City", () => {
   })
   test("should increase Seattle diseaseCount by 1 after two minutes", () => {
     game.setDiseaseCount(2);
-    jest.advanceTimersByTime(120001)
+    jest.advanceTimersByTime(1201)
     expect(seattle.diseaseCount).toEqual(1);
   })
   test("should increase Seattle diseaseCount by 1 after every two minutes", () => {
     game.setDiseaseCount(2);
-    jest.advanceTimersByTime(240001)
+    jest.advanceTimersByTime(2401)
     expect(seattle.diseaseCount).toEqual(2);
   })
   test("should increase Seattle diseaseCount to 3 after 6 minutes", () => {
     game.setDiseaseCount(2);
-    jest.advanceTimersByTime(360001)
+    jest.advanceTimersByTime(3601)
     expect(seattle.diseaseCount).toEqual(3);
   })
   test("should increase Seattle diseaseCount to 3 after 8 minutes", () => {
     game.setDiseaseCount(2);
-    jest.advanceTimersByTime(480001)
+    jest.advanceTimersByTime(4801)
     expect(seattle.diseaseCount).toEqual(3);
   })
 
   test( "should increase Paris and Tokyo's diseaseCount by 1 when Seattle's diseaseCount is capped at three and has a new addtion to its diseaseCount", () => {
     game.setDiseaseCount(2);
-    jest.advanceTimersByTime(480001)
+    jest.advanceTimersByTime(4801)
     expect(seattle.diseaseCount).toEqual(3);
     expect(paris.diseaseCount).toEqual(1);
     expect(tokyo.diseaseCount).toEqual(1);
@@ -56,7 +56,7 @@ describe("City", () => {
   })
   test( "should increase Paris and Tokyo's diseaseCount by 1 when Seattle's diseaseCount is capped at three and has a new addtion to its diseaseCount", () => {
     game.setDiseaseCount(2);
-    jest.advanceTimersByTime(840001)
+    jest.advanceTimersByTime(8401)
     expect(seattle.diseaseCount).toEqual(3);
     expect(paris.diseaseCount).toEqual(3);
     expect(tokyo.diseaseCount).toEqual(3);
@@ -64,4 +64,21 @@ describe("City", () => {
     expect(game.isGameOver).toEqual(true);
   })
 
+  test( "should increase the total disease by 1 after 2 minutes - for a random city", () => {
+    game.setRandomDiseaseCount();
+    jest.advanceTimersByTime(2401)
+    expect(game.getTotalDiseaseCount()).toEqual(2);
+    expect(seattle.diseaseCount).toEqual(0);
+    expect(paris.diseaseCount).toEqual(2);
+    expect(tokyo.diseaseCount).toEqual(0);
+  })
+
+  // test( "should increase the total disease by 1 after 2 minutes - for a random city", () => {
+  //   game.setRandomDiseaseCount();
+  //   jest.advanceTimersByTime(2401)
+  //   expect(game.getTotalDiseaseCount()).toEqual(2);
+  //   expect(seattle.diseaseCount).toEqual(0);
+  //   expect(paris.diseaseCount).toEqual(2);
+  //   expect(tokyo.diseaseCount).toEqual(0);
+  // })
 })

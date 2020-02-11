@@ -1,7 +1,7 @@
 export class Player {
   constructor(){
     this.moveCount = 0;
-    this.currentLocation = seattle;
+    //this.currentLocation = seattle;
   }
 
   treat(city){
@@ -13,7 +13,7 @@ export class Player {
   }
 }
 
-class City {
+export class City {
   constructor(){
     this.diseaseCount = 0;
   }
@@ -26,6 +26,8 @@ export class Game {
     let seattle = new City;
     this.isGameOver = false;
     this.cities = [tokyo, paris, seattle];
+    this.infectRate;
+    this.infectRateRandom;
   }
 
   getTotalDiseaseCount(){
@@ -37,29 +39,37 @@ export class Game {
   }
 
   infect(cityIndex){
-    
     let totalDisease = this.getTotalDiseaseCount();
-
     if (totalDisease >= (3 * this.cities.length)){
-      console.log("game over");
+      console.log(this);
       this.isGameOver = true;
-    } else if(this.cities[cityIndex].diseaseCount == 3){ 
-
-      for (let i =0; i < this.cities.length; i++){
+      clearInterval(this.infectRate);
+      clearInterval(this.infectRateRandom);
+    } else if(this.cities[cityIndex].diseaseCount === 3){ 
+      for (let i = 0; i < this.cities.length; i++){
         if (i != cityIndex && this.cities[i].diseaseCount < 3) {
           this.cities[i].diseaseCount ++;
+          console.log("infected city index = ", i, " at current count: ", this.cities[i].diseaseCount);
         }
       }
-
     } else{
       this.cities[cityIndex].diseaseCount ++;
     }
   }
 
   setDiseaseCount(cityIndex){
-    setInterval(() => {
+    this.infectRate = setInterval(() => {
       this.infect(cityIndex);
-      // allCities.infect();
-    }, 120000);
+    }, 1200);
+  }
+
+  getRandomCityIndex(){
+    return Math.floor(Math.random() * 3);
+  }
+  setRandomDiseaseCount(){
+    this.infectRateRandom = setInterval(() => {
+      let cityIndex = this.getRandomCityIndex();
+      this.infect(cityIndex);
+    }, 1200);
   }
 }
